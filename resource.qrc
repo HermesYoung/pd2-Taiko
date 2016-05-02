@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/background.jpg</file>
+        <file>images/dong.png</file>
+        <file>images/dongOk - 副本.png</file>
+        <file>images/dongOk.png</file>
+        <file>images/hit_don_left.png</file>
+        <file>images/hit_don_right.png</file>
+        <file>images/hit_katsu_left.png</file>
+        <file>images/hit_katsu_right.png</file>
+        <file>images/katsu.png</file>
+        <file>images/katsuOk - 副本.png</file>
+        <file>images/katsuOk.png</file>
+        <file>images/mob.png</file>
+        <file>images/notes.png</file>
+        <file>images/panel.png</file>
+        <file>images/scorePic.png</file>
+        <file>images/title.png</file>
+        <file>images/title_start.png</file>
+        <file>images/Untitled-2.png</file>
+    </qresource>
+    <qresource prefix="/demo">
+        <file>maps/demo/notes.tnt</file>
+    </qresource>
+</RCC>
