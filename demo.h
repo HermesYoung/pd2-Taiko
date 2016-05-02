@@ -2,9 +2,11 @@
 #define DEMO_H
 #include<QTimer>
 #include <QWidget>
+#include<QtMultimedia/QMediaPlayer>
 #include<QLabel>
 #include<QKeyEvent>
 #include<QPushButton>
+#include<QtMultimedia/QMediaPlayer>
 #include"beatmap.h"
 class demo : public QWidget
 {
@@ -16,6 +18,7 @@ void keyPressEvent(QKeyEvent *event);
 void pause();
 void conti();
  void setMap(beatmap);
+ void setMusic(QMediaPlayer*);
  int pause_state;
  void show_all();
  void hide_all();
@@ -47,13 +50,14 @@ QLabel *hit_don_left_label;
    int current_note;
        int current_label;
 beatmap beats;
+QMediaPlayer *bgm;
        int combo;
        int score;
-    int timer_count;
+  long  int timer_count;
        bool pressing_don;
        bool pressing_katsu;
        int update_counter;
-int length;
+ int length;
 };
 
 #endif // DEMO_H

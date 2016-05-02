@@ -7,7 +7,7 @@ class note
 public:
     note();
     int key;
-    int start_time;
+   long int start_time;
     double speed;
 };
 

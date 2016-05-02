@@ -139,6 +139,7 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
 pause_state=0;
         score = 0;
         combo = 0;
+
 }
 
 void demo::hideDonLeft()
@@ -281,11 +282,16 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
+    bgm->setVolume(50);
+    bgm->play();
+
+
     if(update_counter==length)
     {hide_all();
         timer->stop();
 retry->show();
 toMain->show();
+bgm->stop();
     }
     if(update_counter%50==0)
     {
@@ -339,7 +345,7 @@ timerLabel->setText("Timer: "+QString::number(timer_count));
         update_counter++;
     }
 void demo::pause()
-{
+{bgm->pause();
     pause_state=1;
     timer->stop();
     pauseLabel->show();
@@ -347,7 +353,7 @@ void demo::pause()
     toMain->show();
 }
 void demo::conti()
-{
+{bgm->play();
     pause_state=0;
     timer->start();
     pauseLabel->hide();
@@ -377,7 +383,7 @@ void demo::try_again()
 {show_all();
     current_label=0;
     current_note=0;
-    timer_count=31;
+    timer_count=length*20/1000+1;
     score=0;
     combo=0;
     update_counter=0;
@@ -385,6 +391,8 @@ void demo::try_again()
     retry->hide();
     toMain->hide();
      pauseLabel->hide();
+     bgm->stop();
+     bgm->play();
 }
 void demo::to_main(){
     MainWindow *a =new MainWindow(this);
@@ -396,4 +404,9 @@ void demo::setlength(int t)
 {
     length=t;
     timer_count=t*20/1000+1;
+}
+void demo::setMusic(QMediaPlayer *music)
+{
+bgm=music;
+
 }
