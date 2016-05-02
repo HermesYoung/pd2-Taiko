@@ -22,4 +22,7 @@
     <qresource prefix="/demo">
         <file>maps/demo/notes.tnt</file>
     </qresource>
+    <qresource prefix="/map">
+        <file>maps/map/songa/notes.tnt</file>
+    </qresource>
 </RCC>

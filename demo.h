@@ -19,7 +19,7 @@ void conti();
  int pause_state;
  void show_all();
  void hide_all();
-
+void setlength(int);
 
 signals:
 
@@ -49,11 +49,11 @@ QLabel *hit_don_left_label;
 beatmap beats;
        int combo;
        int score;
-    int timer_count=31;
+    int timer_count;
        bool pressing_don;
        bool pressing_katsu;
        int update_counter;
-
+int length;
 };
 
 #endif // DEMO_H

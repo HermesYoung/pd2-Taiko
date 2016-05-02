@@ -10,7 +10,7 @@ beatmap::beatmap(QString address): address(address)
         QString line = "";
 
         line = in->readLine();
-        sscanf(line.toLatin1(), "Offset: %d", &offset);
+        sscanf(line.toLatin1(), "length: %d", &length);
         int count = 0;
             while ( 1 )
             {

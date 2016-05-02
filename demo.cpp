@@ -281,7 +281,7 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
-    if(update_counter==1500)
+    if(update_counter==length)
     {hide_all();
         timer->stop();
 retry->show();
@@ -391,4 +391,9 @@ void demo::to_main(){
 
     a->show();
     this->hide();
+}
+void demo::setlength(int t)
+{
+    length=t;
+    timer_count=t*20/1000+1;
 }

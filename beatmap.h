@@ -11,7 +11,7 @@ class beatmap
 public:
     beatmap(QString address);
     note notes[10000];
-        int offset;
+        int length;
 private:
         QString address;
             QFile *file;

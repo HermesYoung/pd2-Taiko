@@ -22,9 +22,18 @@ private slots:
     void on_playButton_clicked();
 
 
+
+
+    void on_playButton_2_clicked();
+
+    void on_menuButton_clicked();
+
+    void on_mapList_itemDoubleClicked();
+
 private:
     Ui::MainWindow *ui;
  void start_demogame();
+ void start_game(QString);
 };
 
 #endif // MAINWINDOW_H

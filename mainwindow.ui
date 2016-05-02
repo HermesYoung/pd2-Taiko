@@ -27,9 +27,9 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>142</y>
+      <y>400</y>
       <width>200</width>
-      <height>81</height>
+      <height>100</height>
      </rect>
     </property>
     <property name="text">
@@ -40,13 +40,49 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>230</y>
+      <y>260</y>
       <width>200</width>
-      <height>81</height>
+      <height>100</height>
      </rect>
     </property>
     <property name="text">
      <string>Exit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="playButton_2">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>120</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Play</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="mapList">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>30</y>
+      <width>400</width>
+      <height>300</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="menuButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>370</y>
+      <width>200</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Main Menu</string>
     </property>
    </widget>
   </widget>
