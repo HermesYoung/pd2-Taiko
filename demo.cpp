@@ -2,8 +2,8 @@
 #include<QWidget>
 #include "demo.h"
 #include"mainwindow.h"
-QLabel *labelTable[100];
-int labelType[100];
+QLabel *labelTable[1000];
+int labelType[1000];
 QLabel *timerLabel;
 QLabel *scoreLabel;
 QLabel *comboLabel;
@@ -73,7 +73,7 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         scorePicLabel->setVisible(false);
 
         QPixmap dong(":/images/images/dong.png");
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 1000; i++)
         {
             QLabel *label = new QLabel(this);
             label->setPixmap(dong);
@@ -126,7 +126,7 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-        timer->setInterval(20);
+        timer->setInterval(10);
         timer->start();
 
         setFocus();
@@ -184,7 +184,7 @@ void demo::keyPressEvent(QKeyEvent *event)
                 QTimer::singleShot(200, this, SLOT(hideDonRight()));
             }
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 QLabel *label = labelTable[i];
                 if (label->isVisible())
@@ -198,7 +198,7 @@ void demo::keyPressEvent(QKeyEvent *event)
 
                         QTimer::singleShot(200, this, SLOT(hideDongOrKatsuOk()));
                         int x = geom.x();
-                        if (x > 120 && x < 170)
+                        if (x > 120 && x < 160)
                         {
                             score += 100;
                         }
@@ -230,7 +230,7 @@ void demo::keyPressEvent(QKeyEvent *event)
                 hit_katsu_right_label->setVisible(true);
                 QTimer::singleShot(200, this, SLOT(hideKatsuRight()));
             }
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 QLabel *label = labelTable[i];
                 if (label->isVisible())
@@ -244,7 +244,7 @@ void demo::keyPressEvent(QKeyEvent *event)
 
                         QTimer::singleShot(100, this, SLOT(hideDongOrKatsuOk()));
                         int x = geom.x();
-                        if (x > 120 && x < 170)
+                        if (x > 120 && x < 160)
                         {
                             score += 100;
                         }
@@ -279,10 +279,11 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
+if(update_counter==delay)
+{
     bgm->setVolume(50);
     bgm->play();
-
-
+}
     if(update_counter==length)
     {hide_all();
         timer->stop();
@@ -290,14 +291,14 @@ retry->show();
 toMain->show();
 bgm->stop();
     }
-    if(update_counter%50==0)
+    if(update_counter%100==0)
     {
         timer_count--;
 
     }
     if (beats.notes[current_note].start_time == update_counter)//add new label
         {
-            QLabel *label = labelTable[ current_label % 100 ];
+            QLabel *label = labelTable[ current_label % 1000 ];
 
             if (beats.notes[current_note].key == 1)
             {
@@ -309,7 +310,7 @@ bgm->stop();
                 QPixmap katsu(":/images/images/katsu.png");
                 label->setPixmap(katsu);
             }
-            labelType[current_label % 100] = beats.notes[current_note].key;
+            labelType[current_label % 1000] = beats.notes[current_note].key;
 
             label->setGeometry(700, 175, 80, 80);
             label->setVisible(true);
@@ -317,7 +318,7 @@ bgm->stop();
             current_note += 1;
         }
 
-        for (int i = 0; i < 100; i++)//delete label
+        for (int i = 0; i < 1000; i++)//delete label
         {
             QLabel *label = labelTable[i];
             if (label->isVisible())
@@ -364,7 +365,7 @@ panelLabel->show();
 }
 void demo::hide_all()
 {
-    for (int i = 0; i < 100; i++)//delete label
+    for (int i = 0; i < 1000; i++)//delete label
     {
         QLabel *label = labelTable[i];
         if (label->isVisible())
@@ -380,7 +381,7 @@ void demo::try_again()
 {show_all();
     current_label=0;
     current_note=0;
-    timer_count=length*20/1000+1;
+    timer_count=length/100+1;
     score=0;
     combo=0;
     update_counter=0;
@@ -389,8 +390,16 @@ void demo::try_again()
     toMain->hide();
      pauseLabel->hide();
      bgm->stop();
-     bgm->play();
-     pause_state=0;
+          pause_state=0;
+     for (int i = 0; i < 1000; i++)//delete label
+     {
+         QLabel *label = labelTable[i];
+         if (label->isVisible())
+         {
+             label->setVisible(false);
+             }
+
+         }
 }
 void demo::to_main(){
     MainWindow *a =new MainWindow(this);
@@ -401,10 +410,14 @@ void demo::to_main(){
 void demo::setlength(int t)
 {
     length=t;
-    timer_count=t*20/1000+1;
+    timer_count=t/100+1;
 }
 void demo::setMusic(QMediaPlayer *music)
 {
 bgm=music;
 
+}
+void demo::setdelay(int d)
+{
+    delay=d;
 }

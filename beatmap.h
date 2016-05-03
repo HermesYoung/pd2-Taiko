@@ -12,6 +12,7 @@ public:
     beatmap(QString address);
     note notes[10000];
         int length;
+        int delay;
 private:
         QString address;
             QFile *file;

@@ -59,7 +59,7 @@ void MainWindow::start_demogame()
 demo *play=new demo();
 play->setMap(map);
 play->setMusic(music);
-play->setlength(1500);
+play->setlength(30);
 play->resize(this->size());
 play->show();
 }
@@ -77,6 +77,7 @@ demo *play=new demo();
 play->setMap(map);
 play->setlength(map.length);
 play->setMusic(music);
+play->setdelay(map.delay);
 play->resize(this->size());
 play->show();
 }

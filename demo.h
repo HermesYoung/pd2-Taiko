@@ -23,6 +23,7 @@ void conti();
  void show_all();
  void hide_all();
 void setlength(int);
+void setdelay(int);
 
 signals:
 
@@ -59,6 +60,7 @@ QMediaPlayer *bgm;
        bool pressing_katsu;
        int update_counter;
  int length;
+ int delay;
 };
 
 #endif // DEMO_H
