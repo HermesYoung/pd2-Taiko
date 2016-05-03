@@ -124,8 +124,6 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
 
 
 
-
-
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
         timer->setInterval(20);
@@ -174,7 +172,6 @@ void demo::keyPressEvent(QKeyEvent *event)
     if ((event->key() == Qt::Key_G) || (event->key() == Qt::Key_H))
         {
             qDebug() << "1 " << update_counter << " 0";
-
 
             if (event->key() == Qt::Key_G)
             {
@@ -245,7 +242,7 @@ void demo::keyPressEvent(QKeyEvent *event)
                         katsuOkLabel->setVisible(true);
                         scorePicLabel->setVisible(true);
 
-                        QTimer::singleShot(200, this, SLOT(hideDongOrKatsuOk()));
+                        QTimer::singleShot(100, this, SLOT(hideDongOrKatsuOk()));
                         int x = geom.x();
                         if (x > 120 && x < 170)
                         {
@@ -393,6 +390,7 @@ void demo::try_again()
      pauseLabel->hide();
      bgm->stop();
      bgm->play();
+     pause_state=0;
 }
 void demo::to_main(){
     MainWindow *a =new MainWindow(this);

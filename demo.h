@@ -38,7 +38,8 @@ void update();
    void hideDongOrKatsuOk();
 
 private:
-QPushButton *retry;
+
+   QPushButton *retry;
 QPushButton *toMain;
 QLabel *hit_don_left_label;
    QLabel *hit_don_right_label;
