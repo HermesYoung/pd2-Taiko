@@ -15,8 +15,11 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+public slots:
+    void setbg();
     void hide_button();
     void show_button();
+    void showlist();
 private slots:
     void on_exitButton_clicked();
 

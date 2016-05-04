@@ -46,7 +46,7 @@ void MainWindow::on_playButton_clicked()
 {
     hide_button();
  start_demogame();
-this->hide();
+
 
 }
 void MainWindow::start_demogame()
@@ -56,13 +56,13 @@ void MainWindow::start_demogame()
 
     QString map_path = ":/demo/maps/demo/notes.tnt";
      beatmap map(map_path);
-demo *play=new demo();
+demo *play=new demo(this);
 play->setMap(map);
 play->setdelay(0);
 play->setMusic(music);
 play->setlength(3000);
-play->resize(this->size());
 play->show();
+
 }
 
 
@@ -74,17 +74,18 @@ QMediaPlayer *music= new QMediaPlayer(this);
 music->setMedia(QUrl::fromLocalFile(bgm_path));
 QString map_path=dir_map.currentPath()+"/songs/"+name+"/notes.tnt";
      beatmap map(map_path);
-demo *play=new demo();
+demo *play=new demo(this);
 play->setMap(map);
 play->setlength(map.length);
 play->setMusic(music);
 
-
     play->setdelay(map.delay);
 
 
-play->resize(this->size());
+
 play->show();
+
+
 }
 
 void MainWindow::on_playButton_2_clicked()
@@ -115,9 +116,21 @@ void MainWindow::on_menuButton_clicked()
 }
 
 void MainWindow::on_mapList_itemDoubleClicked()
-{
+{   ui->menuButton->hide();
     ui->mapList->hide();
     start_game(ui->mapList->currentItem()->text());
-    this->hide();
-}
 
+}
+void MainWindow::showlist()
+{
+    ui->mapList->show();
+    ui->menuButton->show();
+}
+void MainWindow::setbg()
+{
+    QPixmap bkgd(":/images/images/title.png");
+    bkgd=bkgd.scaled(this->size(),Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background,bkgd);
+   this->setPalette(palette);
+}
