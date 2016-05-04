@@ -31,7 +31,7 @@ private slots:
 
     void on_mapList_itemDoubleClicked();
 
-    void on_checkBox_toggled(bool checked);
+
 
 private:
     Ui::MainWindow *ui;
