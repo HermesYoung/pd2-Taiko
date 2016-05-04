@@ -11,13 +11,11 @@
         <file>images/katsuOk.png</file>
         <file>images/panel.png</file>
         <file>images/title.png</file>
-        <file>images/title_start.png</file>
     </qresource>
     <qresource prefix="/demo">
         <file>maps/demo/notes.tnt</file>
     </qresource>
     <qresource prefix="/map">
-        <file>maps/map/songa/notes.tnt</file>
         <file>maps/map/songa/song.mp3</file>
     </qresource>
     <qresource prefix="/se">

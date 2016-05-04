@@ -8,6 +8,7 @@
 #include<QShortcut>
 #include<QPushButton>
 #include"beatmap.h"
+#include"mainwindow.h"
 class demo : public QWidget
 {
     Q_OBJECT
@@ -28,9 +29,10 @@ void setdelay(int);
 signals:
 
 public slots:
- void try_again();
- void to_main();
+
 private slots:
+void try_again();
+void to_main();
 void update();
    void hideDonLeft();
    void hideDonRight();
