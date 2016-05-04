@@ -5,8 +5,8 @@
 #include<QtMultimedia/QMediaPlayer>
 #include<QLabel>
 #include<QKeyEvent>
+#include<QShortcut>
 #include<QPushButton>
-#include<QtMultimedia/QMediaPlayer>
 #include"beatmap.h"
 class demo : public QWidget
 {
@@ -40,6 +40,8 @@ void update();
 
 private:
 
+QMediaPlayer *don= new QMediaPlayer();
+QMediaPlayer*katsu=new QMediaPlayer();
    QPushButton *retry;
 QPushButton *toMain;
 QLabel *hit_don_left_label;
@@ -49,6 +51,7 @@ QLabel *hit_don_left_label;
    QLabel *dongOkLabel;
    QLabel *katsuOkLabel;
    QLabel *scorePicLabel;
+   QLabel*maxComboLabel;
    int current_note;
        int current_label;
 beatmap beats;
@@ -61,6 +64,7 @@ QMediaPlayer *bgm;
        int update_counter;
  int length;
  int delay;
+ int mxcombo;
 };
 
 #endif // DEMO_H

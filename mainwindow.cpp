@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->menuButton->hide();
     ui->mapList->hide();
-
+    ui->checkBox->hide();
+    ui->manualDelay->hide();
     QDir setting(QDir::currentPath());
     setting.mkdir("songs");
     QPixmap bkgd(":/images/images/title.png");
@@ -58,8 +59,9 @@ void MainWindow::start_demogame()
      beatmap map(map_path);
 demo *play=new demo();
 play->setMap(map);
+play->setdelay(0);
 play->setMusic(music);
-play->setlength(30);
+play->setlength(3000);
 play->resize(this->size());
 play->show();
 }
@@ -77,7 +79,15 @@ demo *play=new demo();
 play->setMap(map);
 play->setlength(map.length);
 play->setMusic(music);
-play->setdelay(map.delay);
+if(ui->checkBox->isChecked())
+{
+    play->setdelay(ui->manualDelay->value());
+}
+else
+{
+    play->setdelay(map.delay);
+}
+
 play->resize(this->size());
 play->show();
 }
@@ -89,6 +99,8 @@ void MainWindow::on_playButton_2_clicked()
     ui->mapList->show();
     ui->mapList->setFocus();
     ui->mapList->clear();
+    ui->checkBox->show();
+    ui->manualDelay->show();
     QDir dir_map;
     QString map_path=dir_map.currentPath()+"/songs";
 
@@ -105,6 +117,8 @@ void MainWindow::on_menuButton_clicked()
     show_button();
     ui->menuButton->hide();
     ui->mapList->hide();
+    ui->checkBox->hide();
+    ui->manualDelay->hide();
 
 }
 
@@ -113,4 +127,9 @@ void MainWindow::on_mapList_itemDoubleClicked()
     ui->mapList->hide();
     start_game(ui->mapList->currentItem()->text());
     this->hide();
+}
+
+void MainWindow::on_checkBox_toggled(bool checked)
+{
+    ui->manualDelay->setEnabled(checked);
 }

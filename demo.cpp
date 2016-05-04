@@ -97,16 +97,22 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         connect(toMain,SIGNAL(clicked()),this,SLOT(to_main()));
 
         scoreLabel = new QLabel(this);
-        scoreLabel->setGeometry(60, 0, 200, 200);
+        scoreLabel->setGeometry(100, 0, 200, 200);
         scoreLabel->setText("Score: 0");
         scoreLabel->setStyleSheet("* {font-size: 32px;}");
         scoreLabel->show();
 
         comboLabel = new QLabel(this);
-        comboLabel->setGeometry(360, 0, 200, 200);
+        comboLabel->setGeometry(100, 400, 200, 200);
         comboLabel->setText("Combo: 0");
         comboLabel->setStyleSheet("* {font-size: 32px;}");
         comboLabel->show();
+
+        maxComboLabel =new QLabel(this);
+        maxComboLabel->setGeometry(100,40,200,200);
+        maxComboLabel->setText("Max Combo: 0");
+        maxComboLabel->setStyleSheet("* {font-size: 32px;}");
+        maxComboLabel->show();
 
         timerLabel = new QLabel(this);
         timerLabel->setGeometry(600,0, 200, 200);
@@ -115,23 +121,24 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         timerLabel->show();
 
         pauseLabel = new QLabel(this);
-        pauseLabel->setGeometry(60, 400, 800, 200);
+        pauseLabel->setGeometry(100, 450, 800, 200);
         pauseLabel->setText("Pause Press P to continue");
         pauseLabel->setStyleSheet("* {font-size: 32px;}");
         pauseLabel->hide();
         pressing_don = false;
         pressing_katsu = false;
 
-
-
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
         timer->setInterval(10);
         timer->start();
-
+don->setMedia(QUrl("qrc:/se/com_don.mp3"));
+don->setVolume(50);
+katsu->setMedia(QUrl("qrc:/se/com_katsu.mp3"));
+katsu->setVolume(50);
         setFocus();
         update_counter = 0;
-
+mxcombo=0;
         current_note = 0;
         current_label = 0;
 pause_state=0;
@@ -143,16 +150,18 @@ pause_state=0;
 void demo::hideDonLeft()
 {
     hit_don_left_label->setVisible(false);
-}
+ }
 
 void demo::hideDonRight()
 {
     hit_don_right_label->setVisible(false);
+
 }
 
 void demo::hideKatsuLeft()
 {
     hit_katsu_left_label->setVisible(false);
+
 }
 
 void demo::hideKatsuRight()
@@ -169,8 +178,13 @@ void demo::hideDongOrKatsuOk()
 void demo::keyPressEvent(QKeyEvent *event)
 {
     if(pause_state==0){
-    if ((event->key() == Qt::Key_G) || (event->key() == Qt::Key_H))
+    if ((!pressing_don)&&((event->key() == Qt::Key_G) || (event->key() == Qt::Key_H)))
         {
+
+        if(don->state()==QMediaPlayer::StoppedState)
+don->play();
+        else
+            don->setPosition(0);
             qDebug() << "1 " << update_counter << " 0";
 
             if (event->key() == Qt::Key_G)
@@ -215,9 +229,14 @@ void demo::keyPressEvent(QKeyEvent *event)
             }
         }
         else
-        if ((event->key() == Qt::Key_F) || (event->key() == Qt::Key_J))
+        if ((!pressing_katsu)&&((event->key() == Qt::Key_F) || (event->key() == Qt::Key_J)))
         {
-            qDebug() << "2 " << update_counter << " 0";
+
+            if(katsu->state()==QMediaPlayer::StoppedState)
+    katsu->play();
+            else
+                katsu->setPosition(0);
+            qDebug() << "2 " << update_counter << " 0"<<event->text();
 
 
             if (event->key() == Qt::Key_F)
@@ -259,7 +278,9 @@ void demo::keyPressEvent(QKeyEvent *event)
                     }
                 }
             }
-        }}
+        }
+
+  }
         if(event->key()==Qt::Key_P)
         {
         if(pause_state==0)
@@ -286,6 +307,9 @@ if(update_counter==delay)
 }
     if(update_counter==length)
     {hide_all();
+        pause();
+        pauseLabel->hide();
+        comboLabel->hide();
         timer->stop();
 retry->show();
 toMain->show();
@@ -336,7 +360,9 @@ bgm->stop();
                 labelTable[i]->setGeometry(geom);
             }
         }
-
+if(combo>mxcombo)
+    mxcombo=combo;
+maxComboLabel->setText("Max Combo: "+QString::number(mxcombo));
         scoreLabel->setText("Score: " + QString::number(score));
         comboLabel->setText("Combo: " + QString::number(combo));
 timerLabel->setText("Timer: "+QString::number(timer_count));
@@ -391,6 +417,7 @@ void demo::try_again()
      pauseLabel->hide();
      bgm->stop();
           pause_state=0;
+          comboLabel->show();
      for (int i = 0; i < 1000; i++)//delete label
      {
          QLabel *label = labelTable[i];
@@ -421,3 +448,5 @@ void demo::setdelay(int d)
 {
     delay=d;
 }
+
+
