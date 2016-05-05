@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include"demo.h"
 #include<QUrl>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -76,8 +77,9 @@ play->show();
 
 void MainWindow::start_game(QString name)
 {QDir dir_map;
+QDir temp;
     QString bgm_path=dir_map.currentPath()+"/songs/"+name+"/song.mp3";
-
+QString bg_path=dir_map.currentPath()+"/songs/"+name;
 QMediaPlayer *music= new QMediaPlayer(this);
 music->setMedia(QUrl::fromLocalFile(bgm_path));
 QString map_path=dir_map.currentPath()+"/songs/"+name+"/notes.tnt";
@@ -87,8 +89,35 @@ play->setMap(map);
 play->setlength(map.length);
 play->setMusic(music);
 
-    play->setdelay(map.delay);
+    QString bg=dir_map.currentPath()+"/songs/"+name+"/bg.jpg";
+temp.setPath(bg);
+ QPalette palette;
+    if(temp.exists(bg))
+    {
+        QPixmap gbkgd;
+        gbkgd.load(bg);
+        gbkgd=gbkgd.scaled(this->size(),Qt::IgnoreAspectRatio);
 
+        palette.setBrush(QPalette::Background,gbkgd);
+
+    }
+    else
+    {
+        QPixmap gdbkgd(":/images/images/background.jpg");
+
+
+
+        gdbkgd=gdbkgd.scaled(this->size(),Qt::IgnoreAspectRatio);
+
+        palette.setBrush(QPalette::Background,gdbkgd);
+
+
+    }
+    this->setPalette(palette);
+
+
+    play->setdelay(map.delay);
+play->setname(name);
 
 
 play->show();

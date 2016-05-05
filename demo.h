@@ -14,6 +14,8 @@ class demo : public QWidget
     Q_OBJECT
 public:
     explicit demo(QWidget *parent = 0);
+    void setname(QString);
+    QString mname;
 QTimer *timer;
 void keyPressEvent(QKeyEvent *event);
 void pause();
@@ -26,6 +28,7 @@ void conti();
 void setlength(int);
 void setdelay(int);
 
+void setmname(QString);
 signals:
 
 public slots:
@@ -39,7 +42,7 @@ void update();
    void hideKatsuLeft();
    void hideKatsuRight();
    void hideDongOrKatsuOk();
-
+  void change_baground_in_game(int);
 private:
 
 QMediaPlayer *don= new QMediaPlayer();
@@ -66,6 +69,7 @@ QMediaPlayer *bgm;
  int length;
  int delay;
  int mxcombo;
+ int v;
 };
 
 #endif // DEMO_H

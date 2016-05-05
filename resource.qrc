@@ -11,6 +11,7 @@
         <file>images/katsuOk.png</file>
         <file>images/panel.png</file>
         <file>images/title.png</file>
+        <file>images/bgcover.PNG</file>
     </qresource>
     <qresource prefix="/demo">
         <file>maps/demo/notes.tnt</file>

@@ -1,7 +1,7 @@
-#include<QDebug>
 #include<QWidget>
 #include "demo.h"
 #include"mainwindow.h"
+#include<QDir>
 
 QLabel *labelTable[1000];
 int labelType[1000];
@@ -9,21 +9,22 @@ QLabel *timerLabel;
 QLabel *scoreLabel;
 QLabel *comboLabel;
 QLabel *pauseLabel;
-QLabel *mobLabel = NULL;
  QLabel *panelLabel;
+ QLabel* coverLabel;
+ QLabel*volumeLabel;
 demo::demo(QWidget *parent) : QWidget(parent),beats("")
-{
-    QPixmap bkgd(":/images/images/background.jpg");
-    bkgd=bkgd.scaled(parentWidget()->size(),Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Background,bkgd);
-   parentWidget()->setPalette(palette);
+{QPixmap cover(":/images/images/bgcover.PNG");
+    coverLabel = new QLabel(parentWidget());
+    coverLabel->setPixmap(cover);
+    coverLabel->setGeometry(100, -50, 800, 300);
+    coverLabel->show();
     QPixmap panel(":/images/images/panel.png");
         panelLabel = new QLabel(parentWidget());
         panelLabel->setPixmap(panel);
         panelLabel->setGeometry(0, 149, 800, 179);
         panelLabel->show();
 
+v=50;
         QPixmap hit_don_left_pic(":/images/images/hit_don_left.png");
         hit_don_left_label = new QLabel(parentWidget());
         hit_don_left_label->setPixmap(hit_don_left_pic);
@@ -66,12 +67,6 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         katsuOkLabel->show();
         katsuOkLabel->setVisible(false);
 
-        QPixmap scorePic(":/images/images/~scorePic.png");
-        scorePicLabel = new QLabel(parentWidget());
-        scorePicLabel->setPixmap(scorePic);
-        scorePicLabel->setGeometry(-100, -20, 485, 240);
-        scorePicLabel->show();
-        scorePicLabel->setVisible(false);
 
         QPixmap dong(":/images/images/dong.png");
         for (int i = 0; i < 1000; i++)
@@ -105,10 +100,16 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         scoreLabel->show();
 
         comboLabel = new QLabel(parentWidget());
-        comboLabel->setGeometry(100, 400, 200, 200);
+        comboLabel->setGeometry(350, 0, 200, 200);
         comboLabel->setText("Combo: 0");
         comboLabel->setStyleSheet("* {font-size: 32px;}");
         comboLabel->show();
+
+        volumeLabel =new QLabel(parentWidget());
+        volumeLabel->setGeometry(580,40,200,200);
+        volumeLabel->setText("Volume: "+QString::number(v));
+        volumeLabel->setStyleSheet("* {font-size: 32px;}");
+        volumeLabel->show();
 
         maxComboLabel =new QLabel(parentWidget());
         maxComboLabel->setGeometry(100,40,200,200);
@@ -117,13 +118,13 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         maxComboLabel->show();
 
         timerLabel = new QLabel(parentWidget());
-        timerLabel->setGeometry(600,0, 200, 200);
+        timerLabel->setGeometry(580,0, 200, 200);
         timerLabel->setText("Timer: 30");
         timerLabel->setStyleSheet("* {font-size: 32px;}");
         timerLabel->show();
 
         pauseLabel = new QLabel(parentWidget());
-        pauseLabel->setGeometry(100, 450, 800, 200);
+        pauseLabel->setGeometry(100, -40, 800, 200);
         pauseLabel->setText("Pause Press P to continue");
         pauseLabel->setStyleSheet("* {font-size: 32px;}");
         pauseLabel->hide();
@@ -175,7 +176,6 @@ void demo::hideDongOrKatsuOk()
 {
     dongOkLabel->setVisible(false);
     katsuOkLabel->setVisible(false);
-    scorePicLabel->setVisible(false);
 }
 void demo::keyPressEvent(QKeyEvent *event)
 {
@@ -187,7 +187,6 @@ void demo::keyPressEvent(QKeyEvent *event)
 don->play();
         else
             don->setPosition(0);
-            qDebug() << "1 " << update_counter << " 0";
 
             if (event->key() == Qt::Key_G)
             {
@@ -210,7 +209,6 @@ don->play();
                     {
                         label->setVisible(false);
                         dongOkLabel->setVisible(true);
-                        scorePicLabel->setVisible(true);
 
                         QTimer::singleShot(200, this, SLOT(hideDongOrKatsuOk()));
                         int x = geom.x();
@@ -238,7 +236,6 @@ don->play();
     katsu->play();
             else
                 katsu->setPosition(0);
-            qDebug() << "2 " << update_counter << " 0"<<event->text();
 
 
             if (event->key() == Qt::Key_F)
@@ -261,7 +258,6 @@ don->play();
                     {
                         label->setVisible(false);
                         katsuOkLabel->setVisible(true);
-                        scorePicLabel->setVisible(true);
 
                         QTimer::singleShot(100, this, SLOT(hideDongOrKatsuOk()));
                         int x = geom.x();
@@ -294,6 +290,33 @@ don->play();
             conti();
         }
         }
+        if(!(event->isAutoRepeat())&&(event->key()==Qt::Key_F1))
+        {
+            if(coverLabel->isVisible())
+            {
+                coverLabel->hide();
+                volumeLabel->setText("Volume: "+QString::number(v));
+            }
+            else
+            {
+                coverLabel->show();
+
+            }
+        }
+        if(!(event->isAutoRepeat())&&(event->key()==Qt::Key_F2))
+        {if(v<100)
+            v+=1;
+            bgm->setVolume(v);
+            volumeLabel->setText("Volume: "+QString::number(v));
+        }
+        else if(!(event->isAutoRepeat())&&(event->key()==Qt::Key_F3))
+        {
+            if(v>0)
+            v-=1;
+            bgm->setVolume(v);
+            volumeLabel->setText("Volume: "+QString::number(v));
+        }
+
 
 }
 void demo::setMap(beatmap new_map)
@@ -302,16 +325,17 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
+    change_baground_in_game(beats.notes[current_note].speed);
 if(update_counter==delay)
 {
-    bgm->setVolume(50);
+    bgm->setVolume(v);
     bgm->play();
 }
     if(update_counter==length)
     {hide_all();
-
+coverLabel->show();
         pauseLabel->hide();
-        comboLabel->hide();
+       comboLabel->hide();
         timer->stop();
 retry->show();
 toMain->show();
@@ -372,6 +396,7 @@ timerLabel->setText("Timer: "+QString::number(timer_count));
     }
 void demo::pause()
 {bgm->pause();
+
     pause_state=1;
     timer->stop();
     pauseLabel->show();
@@ -385,6 +410,7 @@ void demo::conti()
     pauseLabel->hide();
     retry->hide();
     toMain->hide();
+    coverLabel->hide();
 }
 void demo::show_all()
 {
@@ -414,12 +440,14 @@ void demo::try_again()
     score=0;
     combo=0;
     update_counter=0;
+    mxcombo=0;
     timer->start();
     retry->hide();
     toMain->hide();
      pauseLabel->hide();
      bgm->stop();
           pause_state=0;
+          comboLabel->setText("Combo: 0");
           comboLabel->show();
      for (int i = 0; i < 1000; i++)//delete label
      {
@@ -432,7 +460,7 @@ void demo::try_again()
          }
 }
 void demo::to_main(){
-
+coverLabel->hide();
     comboLabel->hide();
     scoreLabel->hide();
     maxComboLabel->hide();
@@ -441,6 +469,7 @@ void demo::to_main(){
     panelLabel->hide();
     timerLabel->hide();
     pauseLabel->hide();
+    volumeLabel->hide();
     for (int i = 0; i < 1000; i++)//delete label
     {
         QLabel *label = labelTable[i];
@@ -467,5 +496,28 @@ void demo::setdelay(int d)
 {
     delay=d;
 }
+void demo::setmname(QString name)
+{
+    mname=name;
+}
+void demo::change_baground_in_game(int i)
+{  QDir temp;
+    QDir dir_map;
+    QString bg=dir_map.currentPath()+"/songs/"+mname+"/bg"+QString::number(i)+".jpg";
+    temp.setPath(bg);
+     QPalette palette;
+    if(temp.exists(bg))
+    {
+        QPixmap gbkgd;
+        gbkgd.load(bg);
+        gbkgd=gbkgd.scaled(parentWidget()->size(),Qt::IgnoreAspectRatio);
 
+        palette.setBrush(QPalette::Background,gbkgd);
 
+        parentWidget()->setPalette(palette);
+    }
+}
+void demo::setname(QString name)
+{
+    mname=name;
+}
