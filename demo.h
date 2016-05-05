@@ -61,8 +61,7 @@ QMediaPlayer *bgm;
        int combo;
        int score;
   long  int timer_count;
-       bool pressing_don;
-       bool pressing_katsu;
+
        int update_counter;
  int length;
  int delay;

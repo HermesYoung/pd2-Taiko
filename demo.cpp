@@ -127,8 +127,7 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         pauseLabel->setText("Pause Press P to continue");
         pauseLabel->setStyleSheet("* {font-size: 32px;}");
         pauseLabel->hide();
-        pressing_don = false;
-        pressing_katsu = false;
+
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -181,7 +180,7 @@ void demo::hideDongOrKatsuOk()
 void demo::keyPressEvent(QKeyEvent *event)
 {
     if(pause_state==0){
-    if ((!pressing_don)&&((event->key() == Qt::Key_G) || (event->key() == Qt::Key_H)))
+    if ((!(event->isAutoRepeat()))&&((event->key() == Qt::Key_G) || (event->key() == Qt::Key_H)))
         {
 
         if(don->state()==QMediaPlayer::StoppedState)
@@ -232,7 +231,7 @@ don->play();
             }
         }
         else
-        if ((!pressing_katsu)&&((event->key() == Qt::Key_F) || (event->key() == Qt::Key_J)))
+        if ((!(event->isAutoRepeat()))&&((event->key() == Qt::Key_F) || (event->key() == Qt::Key_J)))
         {
 
             if(katsu->state()==QMediaPlayer::StoppedState)
