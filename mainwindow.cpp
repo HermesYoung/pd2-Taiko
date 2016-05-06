@@ -69,16 +69,16 @@ srand(time(NULL));
      for(int i=0;i<10000;i++)
      {
 
-         map.notes[i].start_time=i*30;
+         map.notes[i].start_time=i*300;
          map.notes[i].bg=0;
-         map.notes[i].key=rand()%3;
+         map.notes[i].key=rand()%2+1;
      }
 
 demo *play=new demo(this);
 play->setMap(map);
 play->setdelay(0);
 play->setMusic(music);
-play->setlength(3000);
+play->setlength(30000);
 play->show();
 
 }

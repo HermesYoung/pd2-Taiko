@@ -2,7 +2,7 @@
 #include "demo.h"
 #include"mainwindow.h"
 #include<QDir>
-
+#include<QDebug>
 QLabel *labelTable[1000];
 int labelType[1000];
 QLabel *timerLabel;
@@ -25,6 +25,7 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         panelLabel->show();
 
 v=50;
+
         QPixmap hit_don_left_pic(":/images/images/hit_don_left.png");
         hit_don_left_label = new QLabel(parentWidget());
         hit_don_left_label->setPixmap(hit_don_left_pic);
@@ -132,7 +133,7 @@ v=50;
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-        timer->setInterval(10);
+        timer->setInterval(1);
         timer->start();
 don->setMedia(QUrl("qrc:/se/com_don.mp3"));
 don->setVolume(50);
@@ -341,7 +342,7 @@ retry->show();
 toMain->show();
 bgm->stop();
     }
-    if(update_counter%100==0)
+    if(update_counter%1000==0)
     {
         timer_count--;
 
@@ -378,6 +379,7 @@ bgm->stop();
             if (label->isVisible())
             {
                 QRect geom = labelTable[i]->geometry();
+
                 if (geom.x() < 20)
                 {
                     label->setVisible(false);
@@ -386,7 +388,8 @@ bgm->stop();
 
                     combo = 0;
                 }
-                geom.adjust(-4, 0, -4, 0);
+                if(update_counter%2==0)
+                geom.adjust(-1, 0, 0, 0);
                 labelTable[i]->setGeometry(geom);
             }
         }
@@ -440,7 +443,7 @@ void demo::try_again()
     setFocus();
     current_label=0;
     current_note=0;
-    timer_count=length/100+1;
+    timer_count=length/1000+1;
     score=0;
     combo=0;
     update_counter=0;
@@ -490,7 +493,7 @@ coverLabel->hide();
 void demo::setlength(int t)
 {
     length=t;
-    timer_count=t/100+1;
+    timer_count=t/1000+1;
 }
 void demo::setMusic(QMediaPlayer *music)
 {
