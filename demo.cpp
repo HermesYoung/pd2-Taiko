@@ -325,7 +325,7 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
-    change_baground_in_game(beats.notes[current_note].speed);
+    change_baground_in_game(beats.notes[current_note].bg);
 if(update_counter==delay)
 {
     bgm->setVolume(v);
@@ -359,6 +359,10 @@ bgm->stop();
             {
                 QPixmap katsu(":/images/images/katsu.png");
                 label->setPixmap(katsu);
+            }
+            else
+            {QPixmap nonote("");
+                label->setPixmap(nonote);
             }
             labelType[current_label % 1000] = beats.notes[current_note].key;
 
@@ -444,6 +448,7 @@ void demo::try_again()
     timer->start();
     retry->hide();
     toMain->hide();
+
      pauseLabel->hide();
      bgm->stop();
           pause_state=0;
@@ -506,7 +511,10 @@ void demo::change_baground_in_game(int i)
     QString bg=dir_map.currentPath()+"/songs/"+mname+"/bg"+QString::number(i)+".jpg";
     temp.setPath(bg);
      QPalette palette;
-    if(temp.exists(bg))
+     if(update_counter==0){
+         bg=dir_map.currentPath()+"/songs/"+mname+"/bg.jpg";
+     }
+     if(temp.exists(bg))
     {
         QPixmap gbkgd;
         gbkgd.load(bg);
@@ -516,6 +524,7 @@ void demo::change_baground_in_game(int i)
 
         parentWidget()->setPalette(palette);
     }
+
 }
 void demo::setname(QString name)
 {

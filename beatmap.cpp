@@ -19,11 +19,11 @@ beatmap::beatmap(QString address): address(address)
                     break;
                 int type;
                 int time;
-                int speed;
-                sscanf(line.toLatin1(), "%d %d %d", &type, &time, &speed);
+                int bg;
+                sscanf(line.toLatin1(), "%d %d %d", &type, &time, &bg);
                 notes[count].key = type;
                 notes[count].start_time = time;
-                notes[count].speed = speed;
+                notes[count].bg = bg;
                 count += 1;
             }
 }

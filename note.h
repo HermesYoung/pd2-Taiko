@@ -8,7 +8,7 @@ public:
     note();
     int key;
    long int start_time;
-    double speed;
+    int bg;
 };
 
 #endif // NOTE_H

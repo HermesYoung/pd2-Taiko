@@ -3,7 +3,8 @@
 #include "ui_mainwindow.h"
 #include"demo.h"
 #include<QUrl>
-
+#include<cstdlib>
+#include<ctime>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -48,7 +49,7 @@ void MainWindow::show_button()
 
 void MainWindow::on_exitButton_clicked()
 {
-    exit(0);
+exit(0);
 }
 
 void MainWindow::on_playButton_clicked()
@@ -62,9 +63,17 @@ void MainWindow::start_demogame()
 {QString bgm_path="qrc:/map/maps/map/songa/song.mp3";
     QMediaPlayer *music= new QMediaPlayer(this);
     music->setMedia(QUrl(bgm_path));
+srand(time(NULL));
 
-    QString map_path = ":/demo/maps/demo/notes.tnt";
-     beatmap map(map_path);
+     beatmap map("");
+     for(int i=0;i<10000;i++)
+     {
+
+         map.notes[i].start_time=i*30;
+         map.notes[i].bg=0;
+         map.notes[i].key=rand()%3;
+     }
+
 demo *play=new demo(this);
 play->setMap(map);
 play->setdelay(0);
