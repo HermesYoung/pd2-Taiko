@@ -499,6 +499,7 @@ void demo::setMusic(QMediaPlayer *music)
 bgm=music;
 
 bgm->play();
+bgm->pause();
 
 
 }
