@@ -3,15 +3,7 @@
 #include"mainwindow.h"
 #include<QDir>
 #include<QDebug>
-QLabel *labelTable[1000];
-int labelType[1000];
-QLabel *timerLabel;
-QLabel *scoreLabel;
-QLabel *comboLabel;
-QLabel *pauseLabel;
- QLabel *panelLabel;
- QLabel* coverLabel;
- QLabel*volumeLabel;
+
 
 demo::demo(QWidget *parent) : QWidget(parent),beats("")
 {QPixmap cover(":/images/images/bgcover.PNG");
@@ -26,6 +18,8 @@ demo::demo(QWidget *parent) : QWidget(parent),beats("")
         panelLabel->show();
 
 v=50;
+pre=0;
+
 
         QPixmap hit_don_left_pic(":/images/images/hit_don_left.png");
         hit_don_left_label = new QLabel(parentWidget());
@@ -327,10 +321,10 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
-
+if(pre!=beats.notes[current_note].bg)
 
     change_baground_in_game(beats.notes[current_note].bg);
-if(update_counter>=delay)
+if(bgm->isAvailable()&&update_counter>=delay)
 {
     bgm->setVolume(v);
     bgm->play();
@@ -345,12 +339,12 @@ retry->show();
 toMain->show();
 bgm->stop();
     }
-    if(update_counter%1000==0)
+    if(bgm->isAvailable()&&update_counter%1000==0)
     {
         timer_count--;
 
     }
-    if (beats.notes[current_note].start_time == update_counter)//add new label
+    if (bgm->isAvailable()&&beats.notes[current_note].start_time == update_counter)//add new label
         {
             QLabel *label = labelTable[ current_label % 1000 ];
 
@@ -504,6 +498,9 @@ void demo::setMusic(QMediaPlayer *music)
 {
 bgm=music;
 
+bgm->play();
+
+
 }
 void demo::setdelay(int d)
 {
@@ -532,7 +529,7 @@ void demo::change_baground_in_game(int i)
 
         parentWidget()->setPalette(palette);
     }
-
+pre=i;
 }
 void demo::setname(QString name)
 {

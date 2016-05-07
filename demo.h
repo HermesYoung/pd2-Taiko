@@ -59,6 +59,7 @@ QLabel *hit_don_left_label;
    QLabel*maxComboLabel;
    int current_note;
        int current_label;
+       int pre;
 beatmap beats;
 QMediaPlayer *bgm;
        int combo;
@@ -70,6 +71,15 @@ QMediaPlayer *bgm;
  int delay;
  int mxcombo;
  int v;
+ QLabel *labelTable[1000];
+ int labelType[1000];
+ QLabel *timerLabel;
+ QLabel *scoreLabel;
+ QLabel *comboLabel;
+ QLabel *pauseLabel;
+  QLabel *panelLabel;
+  QLabel* coverLabel;
+  QLabel*volumeLabel;
 };
 
 #endif // DEMO_H
