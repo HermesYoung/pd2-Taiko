@@ -13,9 +13,6 @@
         <file>images/title.png</file>
         <file>images/bgcover.PNG</file>
     </qresource>
-    <qresource prefix="/demo">
-        <file>maps/demo/notes.tnt</file>
-    </qresource>
     <qresource prefix="/map">
         <file>maps/map/songa/song.mp3</file>
     </qresource>

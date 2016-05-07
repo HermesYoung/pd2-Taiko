@@ -12,6 +12,7 @@ QLabel *pauseLabel;
  QLabel *panelLabel;
  QLabel* coverLabel;
  QLabel*volumeLabel;
+
 demo::demo(QWidget *parent) : QWidget(parent),beats("")
 {QPixmap cover(":/images/images/bgcover.PNG");
     coverLabel = new QLabel(parentWidget());
@@ -326,8 +327,10 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
+
+
     change_baground_in_game(beats.notes[current_note].bg);
-if(update_counter==delay)
+if(update_counter>=delay)
 {
     bgm->setVolume(v);
     bgm->play();
@@ -389,7 +392,7 @@ bgm->stop();
                     combo = 0;
                 }
                 if(update_counter%2==0)
-                geom.adjust(-1, 0, 0, 0);
+                    geom.adjust(-1, 0, 0, 0);
                 labelTable[i]->setGeometry(geom);
             }
         }
@@ -399,7 +402,8 @@ maxComboLabel->setText("Max Combo: "+QString::number(mxcombo));
         scoreLabel->setText("Score: " + QString::number(score));
         comboLabel->setText("Combo: " + QString::number(combo));
 timerLabel->setText("Timer: "+QString::number(timer_count));
-        update_counter++;
+if(bgm->isAvailable())
+update_counter++;
     }
 void demo::pause()
 {bgm->pause();
@@ -487,6 +491,7 @@ coverLabel->hide();
             }
 
         }
+    delete bgm;
     delete this;
 
 }
