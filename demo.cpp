@@ -119,7 +119,7 @@ pre=0;
         timerLabel->show();
 
         debuger=new QLabel(parentWidget());
-        debuger->setGeometry(100,-40,800,200);
+        debuger->setGeometry(580,-40,800,200);
         debuger->setText("offset: 0");
         debuger->setStyleSheet("* {font-size: 32px;}");
         debuger->hide();
