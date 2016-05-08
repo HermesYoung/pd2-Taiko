@@ -44,7 +44,9 @@ void update();
    void hideDongOrKatsuOk();
   void change_baground_in_game(int);
 private:
+  int pos;
 
+QLabel* debuger;
 QMediaPlayer *don= new QMediaPlayer();
 QMediaPlayer*katsu=new QMediaPlayer();
    QPushButton *retry;

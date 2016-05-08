@@ -1,4 +1,4 @@
-#include<QDir>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"demo.h"
@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuButton->hide();
     ui->mapList->hide();
 ui->menuBar->hide();
+ui->offset_box->hide();
+ui->label->hide();
     QDir setting(QDir::currentPath());
     setting.mkdir("songs");
     QPixmap bkgd(":/images/images/title.png");
@@ -93,6 +95,12 @@ QMediaPlayer *music= new QMediaPlayer(this);
 music->setMedia(QUrl::fromLocalFile(bgm_path));
 QString map_path=dir_map.currentPath()+"/songs/"+name+"/notes.tnt";
      beatmap map(map_path);
+     int i;
+         for (i=0;i<10000;i++)
+         {
+         map.notes[i].start_time=((map.notes[i].start_time-map.notes[0].start_time)*1000)/(1000+ui->offset_box->value())+map.notes[0].start_time;
+
+         }
 demo *play=new demo(this);
 play->setMap(map);
 play->setlength(map.length);
@@ -141,6 +149,8 @@ void MainWindow::on_playButton_2_clicked()
     ui->mapList->show();
     ui->mapList->setFocus();
     ui->mapList->clear();
+    ui->offset_box->show();
+    ui->label->show();
 
     QDir dir_map;
     QString map_path=dir_map.currentPath()+"/songs";
@@ -158,6 +168,8 @@ void MainWindow::on_menuButton_clicked()
     show_button();
     ui->menuButton->hide();
     ui->mapList->hide();
+    ui->offset_box->hide();
+    ui->label->hide();
 
 }
 

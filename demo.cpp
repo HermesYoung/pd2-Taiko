@@ -2,7 +2,6 @@
 #include "demo.h"
 #include"mainwindow.h"
 #include<QDir>
-#include<QDebug>
 
 
 demo::demo(QWidget *parent) : QWidget(parent),beats("")
@@ -119,12 +118,18 @@ pre=0;
         timerLabel->setStyleSheet("* {font-size: 32px;}");
         timerLabel->show();
 
+        debuger=new QLabel(parentWidget());
+        debuger->setGeometry(100,-40,800,200);
+        debuger->setText("offset: 0");
+        debuger->setStyleSheet("* {font-size: 32px;}");
+        debuger->hide();
+
         pauseLabel = new QLabel(parentWidget());
         pauseLabel->setGeometry(100, -40, 800, 200);
         pauseLabel->setText("Pause Press P to continue");
         pauseLabel->setStyleSheet("* {font-size: 32px;}");
         pauseLabel->hide();
-
+pos=0;
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -291,11 +296,24 @@ don->play();
             if(coverLabel->isVisible())
             {
                 coverLabel->hide();
-                volumeLabel->setText("Volume: "+QString::number(v));
+
             }
             else
             {
                 coverLabel->show();
+
+            }
+        }
+        if(!(event->isAutoRepeat())&&(event->key()==Qt::Key_F5))
+        {
+            if(debuger->isVisible())
+            {
+                debuger->hide();
+
+            }
+            else
+            {
+                debuger->show();
 
             }
         }
@@ -321,6 +339,8 @@ void demo::setMap(beatmap new_map)
 }
 void demo::update()
 {
+
+
 if(pre!=beats.notes[current_note].bg)
 
     change_baground_in_game(beats.notes[current_note].bg);
@@ -331,7 +351,7 @@ if(bgm->isAvailable()&&update_counter>=delay)
 }
     if(update_counter==length)
     {hide_all();
-coverLabel->show();
+        coverLabel->show();
         pauseLabel->hide();
        comboLabel->hide();
         timer->stop();
@@ -341,11 +361,17 @@ bgm->stop();
     }
     if(bgm->isAvailable()&&update_counter%1000==0)
     {
+        debuger->setText("offset: "+QString::number(bgm->position()-pos-1000)+"ms");
+
+
+
         timer_count--;
+        pos=bgm->position();
 
     }
     if (bgm->isAvailable()&&beats.notes[current_note].start_time == update_counter)//add new label
         {
+
             QLabel *label = labelTable[ current_label % 1000 ];
 
             if (beats.notes[current_note].key == 1)
@@ -376,6 +402,7 @@ bgm->stop();
             if (label->isVisible())
             {
                 QRect geom = labelTable[i]->geometry();
+
 
                 if (geom.x() < 20)
                 {
@@ -437,7 +464,10 @@ void demo::hide_all()
     panelLabel->hide();
 }
 void demo::try_again()
-{show_all();
+{
+    pos=0;
+
+    show_all();
     setFocus();
     current_label=0;
     current_note=0;
@@ -452,6 +482,7 @@ void demo::try_again()
 
      pauseLabel->hide();
      bgm->stop();
+     bgm->setPosition(0);
           pause_state=0;
           comboLabel->setText("Combo: 0");
           comboLabel->show();
@@ -466,7 +497,8 @@ void demo::try_again()
          }
 }
 void demo::to_main(){
-coverLabel->hide();
+    debuger->hide();
+    coverLabel->hide();
     comboLabel->hide();
     scoreLabel->hide();
     maxComboLabel->hide();
@@ -498,8 +530,6 @@ void demo::setMusic(QMediaPlayer *music)
 {
 bgm=music;
 
-bgm->play();
-bgm->pause();
 
 
 }
@@ -519,6 +549,7 @@ void demo::change_baground_in_game(int i)
      QPalette palette;
      if(update_counter==0){
          bg=dir_map.currentPath()+"/songs/"+mname+"/bg.jpg";
+
      }
      if(temp.exists(bg))
     {

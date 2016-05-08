@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include"demo.h"
+
 #include <QMainWindow>
+#include<QDir>
+#include"demo.h"
 
 
 namespace Ui {
@@ -40,6 +42,8 @@ private:
     Ui::MainWindow *ui;
  void start_demogame();
  void start_game(QString);
+
+
 };
 
 #endif // MAINWINDOW_H
