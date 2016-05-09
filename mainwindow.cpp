@@ -98,7 +98,7 @@ QString map_path=dir_map.currentPath()+"/songs/"+name+"/notes.tnt";
      int i;
          for (i=0;i<10000;i++)
          {
-         map.notes[i].start_time=((map.notes[i].start_time-map.notes[0].start_time)*1000)/(1000+ui->offset_box->value())+map.notes[0].start_time;
+         map.notes[i].start_time=((map.notes[i].start_time-map.delay)*1000)/(1000+ui->offset_box->value())+map.delay;
 
          }
          map.length=((map.length-map.delay)*1000)/(1000+ui->offset_box->value())+map.delay;
