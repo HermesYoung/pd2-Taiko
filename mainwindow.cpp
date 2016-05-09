@@ -78,7 +78,7 @@ srand(time(NULL));
 
 demo *play=new demo(this);
 play->setMap(map);
-play->setdelay(0);
+play->setdelay(1120);
 play->setMusic(music);
 play->setlength(30000);
 play->show();
@@ -101,6 +101,7 @@ QString map_path=dir_map.currentPath()+"/songs/"+name+"/notes.tnt";
          map.notes[i].start_time=((map.notes[i].start_time-map.notes[0].start_time)*1000)/(1000+ui->offset_box->value())+map.notes[0].start_time;
 
          }
+         map.length=((map.length-map.delay)*1000)/(1000+ui->offset_box->value())+map.delay;
 demo *play=new demo(this);
 play->setMap(map);
 play->setlength(map.length);

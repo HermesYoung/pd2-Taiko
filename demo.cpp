@@ -122,7 +122,7 @@ pre=0;
         debuger->setGeometry(580,-40,800,200);
         debuger->setText("offset: 0");
         debuger->setStyleSheet("* {font-size: 32px;}");
-        debuger->hide();
+        debuger->show();
 
         pauseLabel = new QLabel(parentWidget());
         pauseLabel->setGeometry(100, -40, 800, 200);
@@ -361,6 +361,7 @@ bgm->stop();
     }
     if(bgm->isAvailable()&&update_counter%1000==0)
     {
+        if(update_counter>delay)
         debuger->setText("offset: "+QString::number(bgm->position()-pos-1000)+"ms");
 
 
