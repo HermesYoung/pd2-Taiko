@@ -340,11 +340,10 @@ void demo::setMap(beatmap new_map)
 void demo::update()
 {
 
-
 if(pre!=beats.notes[current_note].bg)
 
     change_baground_in_game(beats.notes[current_note].bg);
-if(bgm->isAvailable()&&update_counter>=delay)
+if(bgm->isAudioAvailable()&&update_counter>=delay)
 {
     bgm->setVolume(v);
     bgm->play();
@@ -359,7 +358,7 @@ retry->show();
 toMain->show();
 bgm->stop();
     }
-    if(bgm->isAvailable()&&update_counter%1000==0)
+    if( bgm->isAudioAvailable()&&update_counter%1000==0)
     {
         if(update_counter>delay)
         debuger->setText("offset: "+QString::number(bgm->position()-pos-1000)+"ms");
@@ -370,7 +369,7 @@ bgm->stop();
         pos=bgm->position();
 
     }
-    if (bgm->isAvailable()&&beats.notes[current_note].start_time == update_counter)//add new label
+    if ( bgm->isAudioAvailable()&&beats.notes[current_note].start_time == update_counter)//add new label
         {
 
             QLabel *label = labelTable[ current_label % 1000 ];
@@ -424,7 +423,7 @@ maxComboLabel->setText("Max Combo: "+QString::number(mxcombo));
         scoreLabel->setText("Score: " + QString::number(score));
         comboLabel->setText("Combo: " + QString::number(combo));
 timerLabel->setText("Timer: "+QString::number(timer_count));
-if(bgm->isAvailable())
+if( bgm->isAudioAvailable())
 update_counter++;
     }
 void demo::pause()
