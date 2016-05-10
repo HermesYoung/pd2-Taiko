@@ -442,7 +442,7 @@ void demo::conti()
     pauseLabel->hide();
     retry->hide();
     toMain->hide();
-    coverLabel->hide();
+
 }
 void demo::show_all()
 {
