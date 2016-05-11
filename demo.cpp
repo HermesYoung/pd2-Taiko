@@ -280,6 +280,8 @@ don->play();
         }
 
   }
+    if(update_counter<length)
+    {
         if(event->key()==Qt::Key_P)
         {
         if(pause_state==0)
@@ -291,6 +293,7 @@ don->play();
             conti();
         }
         }
+    }
         if(!(event->isAutoRepeat())&&(event->key()==Qt::Key_F1))
         {
             if(coverLabel->isVisible())
@@ -357,10 +360,11 @@ if(bgm->isAudioAvailable()&&update_counter>=delay)
 retry->show();
 toMain->show();
 bgm->stop();
+pause_state=1;
     }
     if( bgm->isAudioAvailable()&&update_counter%1000==0)
     {
-        if(update_counter>delay)
+        if(update_counter>delay&&update_counter<(length-1000))
         debuger->setText("offset: "+QString::number(bgm->position()-pos-1000)+"ms");
 
 
@@ -497,26 +501,28 @@ void demo::try_again()
          }
 }
 void demo::to_main(){
-    debuger->hide();
-    coverLabel->hide();
-    comboLabel->hide();
-    scoreLabel->hide();
-    maxComboLabel->hide();
-    retry->hide();
-    toMain->hide();
-    panelLabel->hide();
-    timerLabel->hide();
-    pauseLabel->hide();
-    volumeLabel->hide();
+    debuger->close();
+    coverLabel->close();
+    comboLabel->close();
+    scoreLabel->close();
+    maxComboLabel->close();
+    retry->close();
+    toMain->close();
+    panelLabel->close();
+    timerLabel->close();
+    pauseLabel->close();
+    volumeLabel->close();
     for (int i = 0; i < 1000; i++)//delete label
     {
         QLabel *label = labelTable[i];
         if (label->isVisible())
         {
-            label->setVisible(false);
+            label->close();
             }
 
         }
+    delete don;
+    delete katsu;
     delete bgm;
     delete this;
 
