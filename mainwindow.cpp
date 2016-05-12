@@ -198,4 +198,8 @@ void MainWindow::setbg()
     QPalette palette;
     palette.setBrush(QPalette::Background,bkgd);
    this->setPalette(palette);
+    ui->label->show();
+    ui->label_2->show();
+    ui->offset_box->show();
+    ui->delay->show();
 }
